@@ -1,9 +1,7 @@
-# RAJ Bot
+# R.A.J. Bot
 
-## Setup Instructions
-1. Have Python 3.9 installed
-2. Clone repo
-3. Install roblox-py FROM SOURCE using `pip install git+https://github.com/KILR007/roblox.py`
-4. Install `discord.py` as usual
-5. Fill in relevant details in `settings_template.json` and rename it to `settings.json`
-6. Run `rajbot.py`
+## Heroku Config Vars
+- `DISCORD_TOKEN` must be set to Discord bot's token
+- `ROBLOX_TOKEN` must be the `.ROBLOSECURITY` of the Roblox account
+- `DISCORD_NOTIFICATION_CHANNEL_ID` and `DISCORD_LOG_CHANNEL_ID` must be the channel IDs of the channel to read notifications from and log to, respectively
+- `ROBLOX_GROUP_ID` must be the ID of the group the Roblox account will shout in 
