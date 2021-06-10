@@ -1,6 +1,6 @@
 import json
 import re
-import asyncio
+import os
 import time
 
 import logging
@@ -19,7 +19,12 @@ settings_file = open("settings.json")
 settings = json.load(settings_file)
 credentials = settings["credentials"]
 
-roblox_client = RobloxClient(cookies=credentials["roblox_token"])
+roblox_client = RobloxClient(cookies=str(os.environ.get("ROBLOX_TOKEN", credentials["roblox_token"])))
+
+roblox_group_id = os.environ.get("ROBLOX_GROUP_ID", settings["roblox_group_id"])
+
+discord_log_channel_id = os.environ.get("DISCORD_LOG_CHANNEL_ID", settings["discord_log_channel_id"])
+discord_notification_channel_id = os.environ.get("DISCORD_NOTIFICATION_CHANNEL_ID", settings["discord_notification_channel_id"])
 
 async def format_and_shout(client, message):
     # Remove all instances of @everyone / @here, role mentions, and user mentions
@@ -33,7 +38,7 @@ async def format_and_shout(client, message):
 
     try:
         performance_timer_start = time.perf_counter()
-        auth_group = await roblox_client.get_auth_group(settings["roblox_group_id"])
+        auth_group = await roblox_client.get_auth_group(roblox_group_id)
         await auth_group.change_shout(formatted_shout_message)
     except:
         embed_var = discord.Embed(title = "Shout Failure", color = discord.Color.dark_red())
@@ -44,7 +49,7 @@ async def format_and_shout(client, message):
         )
         embed_var.set_footer(text="Please report this to SimplestUsername.")
         
-        log_channel = client.get_channel(settings["discord_log_channel_id"])
+        log_channel = client.get_channel(discord_log_channel_id)
         await log_channel.send(embed=embed_var)
         raise
     else:
@@ -56,7 +61,7 @@ async def format_and_shout(client, message):
         )
         embed_var.set_footer(text="Any issues? Contact SimplestUsername. Elapsed time: " + str(time.perf_counter() - performance_timer_start))
         
-        log_channel = client.get_channel(settings["discord_log_channel_id"])
+        log_channel = client.get_channel(discord_log_channel_id)
         await log_channel.send(embed=embed_var)
 
 class DiscordClient(discord.Client):
@@ -67,7 +72,7 @@ class DiscordClient(discord.Client):
         if message.author.bot: 
             return
 
-        if message.channel.id == settings["discord_notification_channel_id"]:
+        if message.channel.id == discord_notification_channel_id:
             await format_and_shout(self, message)
 
 discord_client = DiscordClient()
