@@ -1,0 +1,10 @@
+{
+    "credentials": {
+        "roblox_token": ".ROBLOSECURITY Token",
+        "discord_token": "Discord Bot Token"
+    },
+
+    "roblox_group_id": 100000000,
+    "discord_notification_channel_id": 100000000,
+    "discord_log_channel_id": 100000000
+}
