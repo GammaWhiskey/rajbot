@@ -1,2 +1,2 @@
 discord.py==1.7.2
-https://github.com/KILR007/roblox.py.git
+git+git://github.com/KILR007/roblox.py.git
