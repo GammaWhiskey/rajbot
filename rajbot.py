@@ -15,16 +15,12 @@ from roblox_py import Client as RobloxClient
 
 import discord
 
-settings_file = open("settings.json")
-settings = json.load(settings_file)
-credentials = settings["credentials"]
+roblox_client = RobloxClient(cookies=str(os.environ.get("ROBLOX_TOKEN")))
 
-roblox_client = RobloxClient(cookies=str(os.environ.get("ROBLOX_TOKEN", credentials["roblox_token"])))
+roblox_group_id = os.environ.get("ROBLOX_GROUP_ID")
 
-roblox_group_id = os.environ.get("ROBLOX_GROUP_ID", settings["roblox_group_id"])
-
-discord_log_channel_id = os.environ.get("DISCORD_LOG_CHANNEL_ID", settings["discord_log_channel_id"])
-discord_notification_channel_id = os.environ.get("DISCORD_NOTIFICATION_CHANNEL_ID", settings["discord_notification_channel_id"])
+discord_log_channel_id = os.environ.get("DISCORD_LOG_CHANNEL_ID")
+discord_notification_channel_id = os.environ.get("DISCORD_NOTIFICATION_CHANNEL_ID")
 
 async def format_and_shout(client, message):
     # Remove all instances of @everyone / @here, role mentions, and user mentions
@@ -76,4 +72,4 @@ class DiscordClient(discord.Client):
             await format_and_shout(self, message)
 
 discord_client = DiscordClient()
-discord_client.run(credentials["discord_token"])
+discord_client.run(os.environ.get("DISCORD_TOKEN"))
