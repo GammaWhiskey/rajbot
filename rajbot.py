@@ -65,10 +65,13 @@ class DiscordClient(discord.Client):
         print('Logged on as {0}!'.format(self.user))
 
     async def on_message(self, message):
+        print('Message from {0.author}: {0.content}'.format(message))
         if message.author.bot: 
+            print("Previous message is from bot!")
             return
 
         if message.channel.id == discord_notification_channel_id:
+            print("Correct channel ID found.")
             await format_and_shout(self, message)
 
 discord_client = DiscordClient()
