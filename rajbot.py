@@ -17,7 +17,7 @@ import discord
 
 roblox_client = RobloxClient(cookies=str(os.environ.get("ROBLOX_TOKEN")))
 
-roblox_group_id = os.environ.get("ROBLOX_GROUP_ID")
+roblox_group_id = int(os.environ.get("ROBLOX_GROUP_ID"))
 
 discord_log_channel_id = int(os.environ.get("DISCORD_LOG_CHANNEL_ID"))
 discord_notification_channel_id = int(os.environ.get("DISCORD_NOTIFICATION_CHANNEL_ID"))
@@ -66,12 +66,8 @@ class DiscordClient(discord.Client):
 
     async def on_message(self, message):
         print('Message from {0.author}: {0.content}'.format(message))
-        if message.author.bot: 
-            print("Previous message is from bot!")
-            return
-
+        
         if message.channel.id == discord_notification_channel_id:
-            print("Correct channel ID found.")
             await format_and_shout(self, message)
 
 discord_client = DiscordClient()
