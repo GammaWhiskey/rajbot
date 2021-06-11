@@ -19,8 +19,8 @@ roblox_client = RobloxClient(cookies=str(os.environ.get("ROBLOX_TOKEN")))
 
 roblox_group_id = os.environ.get("ROBLOX_GROUP_ID")
 
-discord_log_channel_id = os.environ.get("DISCORD_LOG_CHANNEL_ID")
-discord_notification_channel_id = os.environ.get("DISCORD_NOTIFICATION_CHANNEL_ID")
+discord_log_channel_id = int(os.environ.get("DISCORD_LOG_CHANNEL_ID"))
+discord_notification_channel_id = int(os.environ.get("DISCORD_NOTIFICATION_CHANNEL_ID"))
 
 async def format_and_shout(client, message):
     # Remove all instances of @everyone / @here, role mentions, and user mentions
