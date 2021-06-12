@@ -26,6 +26,9 @@ async def format_and_shout(client, message):
     # Remove all instances of @everyone / @here, role mentions, and user mentions
     formatted_shout_message = re.sub(r"(@\w+\W?)|(<@(!|&)\w+>\W?)", "", message.content)
 
+    # Remove Discord markdown formatting characters that don't have escape characters
+    formatted_shout_message = re.sub(r"(?<!\\)\*{1,3}|[_~]{2}", "", formatted_shout_message)
+
     username_to_use = message.author.nick
     if not username_to_use:
         username_to_use = message.author.name
