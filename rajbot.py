@@ -22,6 +22,8 @@ discord_log_channel_id = int(os.environ.get("DISCORD_LOG_CHANNEL_ID"))
 discord_notification_channel_id = int(os.environ.get("DISCORD_NOTIFICATION_CHANNEL_ID"))
 discord_bot_channel_id = int(os.environ.get("DISCORD_BOT_CHANNEL_ID"))
 
+discord_success_emote_id = int(os.environ.get("DISCORD_SUCCESS_EMOTE_ID"))
+
 async def format_and_shout(client: discord.Client, message: discord.Message):
     # Remove all instances of @everyone / @here, role mentions, and user mentions
     formatted_shout_message = re.sub(r"(@\w+\W?)|(<@(!|&)\w+>\W?)", "", message.content)
@@ -86,6 +88,8 @@ async def format_and_shout(client: discord.Client, message: discord.Message):
         
         log_channel = client.get_channel(discord_log_channel_id)
         await log_channel.send(embed=embed_var)
+
+        await message.add_reaction(client.get_emoji(discord_success_emote_id))
 
 async def confirm_message_too_long(client: discord.Client, message: discord.Message, shout: str):
     embed_var = discord.Embed(title = "Warning", color = discord.Color.from_rgb(255, 255, 60))
