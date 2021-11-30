@@ -1,4 +1,5 @@
 # R.A.J. Bot
+This bot is no longer in use by the organization I developed it for. Hopefully someone can learn from it, though!
 
 ## Heroku Config Vars
 - `DISCORD_TOKEN` must be set to Discord bot's token
